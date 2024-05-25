@@ -14,6 +14,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     'assets/profile_gallery/photo1.jpg',
     'assets/profile_gallery/photo2.jpg',
     'assets/profile_gallery/photo3.jpg',
+    'assets/profile_gallery/photo4.jpg',
+    'assets/profile_gallery/photo5.jpg',
   ];
 
   int _currentPage = 0;
@@ -66,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const Text(
               'MARCUS OSAKA',
               style: TextStyle(
-                color: AppColors.darkRed,
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -79,47 +81,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 fontSize: 12,
               ),
             ),
-
-            // Photo Gallery
-            Expanded(
-                child: Stack(
-              children: [
-                PageView.builder(
-                  controller: _pageController,
-                  itemCount: _imagePaths.length,
-                  itemBuilder: (context, index) {
-                    return Image.asset(_imagePaths[index]);
-                  },
-                  onPageChanged: (index) {
-                    setState(() {
-                      _currentPage = index;
-                    });
-                  },
+            // Latest Posts
+            const Padding(
+              padding: EdgeInsets.only(top: 12.0, bottom: 2.0),
+              child: Text(
+                'Latest posts',
+                style: TextStyle(
+                  color: Colors.white,
                 ),
-                Positioned(
-                  left: 10,
-                  top: MediaQuery.of(context).size.height / 2 - 25,
+              ),
+            ),
+            // Photo Gallery
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: IconButton(
                     onPressed: _previousPage,
                     icon: const Icon(
                       Icons.arrow_back_ios,
                       color: Colors.white,
                     ),
+                    iconSize: 12.0,
+                    alignment: Alignment.center,
+                    enableFeedback: true,
                   ),
                 ),
-                Positioned(
-                  right: 10,
-                  top: MediaQuery.of(context).size.height / 2 - 25,
+                SizedBox(
+                  width: 200,
+                  height: 200,
+                  child: PageView.builder(
+                    controller: _pageController,
+                    itemCount: _imagePaths.length,
+                    itemBuilder: (context, index) {
+                      return Image.asset(
+                        _imagePaths[index],
+                        fit: BoxFit.cover,
+                      );
+                    },
+                    onPageChanged: (index) {
+                      setState(() {
+                        _currentPage = index;
+                      });
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: IconButton(
                     onPressed: _nextPage,
                     icon: const Icon(
                       Icons.arrow_forward_ios,
                       color: Colors.white,
                     ),
+                    iconSize: 12.0,
+                    alignment: Alignment.center,
+                    enableFeedback: true,
                   ),
                 ),
               ],
-            ))
+            )
           ],
         ),
       ),
